@@ -7,7 +7,7 @@ class User {
   final String gender;
 
   const User({
-    required this.id,
+    this.id = '',
     required this.cpf,
     required this.userName,
     required this.mothersName,
