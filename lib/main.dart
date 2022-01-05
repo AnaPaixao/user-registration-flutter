@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:user_registration/provider/users.dart';
+import 'package:user_registration/routes/app_routes.dart';
+import 'package:user_registration/views/user_form.dart';
 import 'package:user_registration/views/user_list.dart';
 
 void main() {
@@ -29,7 +31,10 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        home: const UserList(),
+        routes: {
+          AppRoutes.home: (_) => const UserList(),
+          AppRoutes.userForm: (_) => UserForm()
+        },
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:user_registration/components/user_tile.dart';
 import 'package:user_registration/provider/users.dart';
+import 'package:user_registration/routes/app_routes.dart';
 
 class UserList extends StatelessWidget {
   const UserList({Key? key}) : super(key: key);
@@ -16,7 +17,9 @@ class UserList extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.add),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed(AppRoutes.userForm);
+            },
           )
         ],
       ),

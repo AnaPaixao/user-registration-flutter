@@ -1,5 +1,5 @@
 class User {
-  final String id;
+  final id;
   final String cpf;
   final String userName;
   final String mothersName;

@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
@@ -21,7 +23,6 @@ class Users with ChangeNotifier {
 
   // add and alter
   void put(User user) {
-    // ignore: unnecessary_null_comparison
     if (user == null) {
       return;
     }
@@ -53,5 +54,12 @@ class Users with ChangeNotifier {
       );
     }
     notifyListeners();
+  }
+
+  void remove(User user) {
+    if (user != null && user.id != null) {
+      _items.remove(user.id);
+      notifyListeners();
+    }
   }
 }
