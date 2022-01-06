@@ -27,6 +27,8 @@ class _UserFormState extends State<UserForm> {
     }
   }
 
+  String radioBtnValue = "n";
+
   @override
   void didChangeDependencies() {
     // ignore: todo
@@ -125,9 +127,36 @@ class _UserFormState extends State<UserForm> {
                     ),
                     TextFormField(
                       initialValue: _formData['gender'],
-                      decoration: const InputDecoration(labelText: 'Gênero'),
-                      onSaved: (value) => _formData['gender'] = value!,
-                    )
+                      // decoration: const InputDecoration(labelText: 'Gênero'),
+                      onSaved: (value) => _formData['gender'] = radioBtnValue,
+                    ),
+                    RadioListTile(
+                        title: Text("Feminino"),
+                        value: "feminino",
+                        groupValue: radioBtnValue,
+                        onChanged: (_) {
+                          setState(() {
+                            radioBtnValue = "feminino";
+                          });
+                        }),
+                    RadioListTile(
+                        title: Text("Masculino"),
+                        value: "masculino",
+                        groupValue: radioBtnValue,
+                        onChanged: (_) {
+                          setState(() {
+                            radioBtnValue = "masculino";
+                          });
+                        }),
+                    RadioListTile(
+                        title: Text("Outros"),
+                        value: "outros",
+                        groupValue: radioBtnValue,
+                        onChanged: (_) {
+                          setState(() {
+                            radioBtnValue = "outros";
+                          });
+                        }),
                   ],
                 ),
               ),

@@ -18,14 +18,38 @@ class _UserListState extends State<UserList> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lista de Usuários'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              Navigator.of(context).pushNamed(AppRoutes.userForm);
-            },
-          )
-        ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.brown,
+              ),
+              child: Text(
+                'Cadastro de usuário',
+                style: TextStyle(color: Colors.white, fontSize: 24),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.person_add),
+              title: const Text('Novo Cadastro'),
+              onTap: () {
+                Navigator.of(context).pushNamed(AppRoutes.userForm);
+                // Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.people),
+              title: const Text('Lista de Cadastros'),
+              onTap: () {
+                Navigator.of(context).pushNamed(AppRoutes.home);
+                // Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
       ),
       body: ListView.builder(
         itemCount: users.count,
