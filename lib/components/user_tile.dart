@@ -6,16 +6,21 @@ import 'package:user_registration/models/user.dart';
 import 'package:user_registration/provider/users.dart';
 import 'package:user_registration/routes/app_routes.dart';
 
-class UserTile extends StatelessWidget {
+class UserTile extends StatefulWidget {
   final User user;
 
   const UserTile(this.user);
 
   @override
+  State<UserTile> createState() => _UserTileState();
+}
+
+class _UserTileState extends State<UserTile> {
+  @override
   Widget build(BuildContext context) {
     return ListTile(
-        title: Text(user.userName),
-        subtitle: Text(user.cpf),
+        title: Text(widget.user.userName),
+        subtitle: Text(widget.user.cpf),
         trailing: SizedBox(
           width: 100,
           child: Row(
@@ -26,7 +31,7 @@ class UserTile extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pushNamed(
                     AppRoutes.userForm,
-                    arguments: user,
+                    arguments: widget.user,
                   );
                 },
               ),
@@ -50,7 +55,7 @@ class UserTile extends StatelessWidget {
                           child: const Text('Sim'),
                           onPressed: () {
                             Provider.of<Users>(context, listen: false)
-                                .remove(user);
+                                .remove(widget.user);
                             Navigator.of(context).pop();
                           },
                         ),

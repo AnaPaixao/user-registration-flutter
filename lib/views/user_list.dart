@@ -4,10 +4,14 @@ import 'package:user_registration/components/user_tile.dart';
 import 'package:user_registration/provider/users.dart';
 import 'package:user_registration/routes/app_routes.dart';
 
-class UserList extends StatelessWidget {
+class UserList extends StatefulWidget {
   const UserList({Key? key}) : super(key: key);
 
   @override
+  State<UserList> createState() => _UserListState();
+}
+
+class _UserListState extends State<UserList> {
   Widget build(BuildContext context) {
     final Users users = Provider.of(context);
 

@@ -11,6 +11,7 @@ class UserForm extends StatefulWidget {
 class _UserFormState extends State<UserForm> {
   // const UserForm({Key? key}) : super(key: key);
   final _form = GlobalKey<FormState>();
+  bool _isLoading = false;
 
   final Map<String, String> _formData = {};
 
@@ -49,13 +50,17 @@ class _UserFormState extends State<UserForm> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.save),
-            onPressed: () {
+            onPressed: () async {
               final isValid = _form.currentState!.validate();
 
               if (isValid) {
                 _form.currentState?.save();
 
-                Provider.of<Users>(context, listen: false).put(
+                setState(() {
+                  _isLoading = true;
+                });
+
+                await Provider.of<Users>(context, listen: false).put(
                   User(
                     id: _formData['id'],
                     cpf: _formData['cpf']!,
@@ -66,59 +71,67 @@ class _UserFormState extends State<UserForm> {
                   ),
                 );
 
+                setState(() {
+                  _isLoading = false;
+                });
+
                 Navigator.of(context).pop();
               }
             },
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(15),
-        child: Form(
-          key: _form,
-          child: Column(
-            children: <Widget>[
-              TextFormField(
-                initialValue: _formData['cpf'],
-                decoration: const InputDecoration(labelText: 'CPF'),
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return 'Campo Obrigatório';
-                  }
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Padding(
+              padding: const EdgeInsets.all(15),
+              child: Form(
+                key: _form,
+                child: Column(
+                  children: <Widget>[
+                    TextFormField(
+                      initialValue: _formData['cpf'],
+                      decoration: const InputDecoration(labelText: 'CPF'),
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return 'Campo Obrigatório';
+                        }
 
-                  if (value.trim().length < 11 || value.trim().length > 11) {
-                    return 'CPF Inválido';
-                  }
+                        if (value.trim().length < 11 ||
+                            value.trim().length > 11) {
+                          return 'CPF Inválido';
+                        }
 
-                  return null;
-                },
-                onSaved: (value) => _formData['cpf'] = value!,
+                        return null;
+                      },
+                      onSaved: (value) => _formData['cpf'] = value!,
+                    ),
+                    TextFormField(
+                      initialValue: _formData['userName'],
+                      decoration: const InputDecoration(labelText: 'Nome'),
+                      onSaved: (value) => _formData['userName'] = value!,
+                    ),
+                    TextFormField(
+                      initialValue: _formData['mothersName'],
+                      decoration:
+                          const InputDecoration(labelText: 'Nome da Mãe'),
+                      onSaved: (value) => _formData['mothersName'] = value!,
+                    ),
+                    TextFormField(
+                      initialValue: _formData['birth'],
+                      decoration: const InputDecoration(
+                          labelText: 'Data de Nascimento'),
+                      onSaved: (value) => _formData['birth'] = value!,
+                    ),
+                    TextFormField(
+                      initialValue: _formData['gender'],
+                      decoration: const InputDecoration(labelText: 'Gênero'),
+                      onSaved: (value) => _formData['gender'] = value!,
+                    )
+                  ],
+                ),
               ),
-              TextFormField(
-                initialValue: _formData['userName'],
-                decoration: const InputDecoration(labelText: 'Nome'),
-                onSaved: (value) => _formData['userName'] = value!,
-              ),
-              TextFormField(
-                initialValue: _formData['mothersName'],
-                decoration: const InputDecoration(labelText: 'Nome da Mãe'),
-                onSaved: (value) => _formData['mothersName'] = value!,
-              ),
-              TextFormField(
-                initialValue: _formData['birth'],
-                decoration:
-                    const InputDecoration(labelText: 'Data de Nascimento'),
-                onSaved: (value) => _formData['birth'] = value!,
-              ),
-              TextFormField(
-                initialValue: _formData['gender'],
-                decoration: const InputDecoration(labelText: 'Gênero'),
-                onSaved: (value) => _formData['gender'] = value!,
-              )
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }
