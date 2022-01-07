@@ -50,7 +50,7 @@ class _UserListState extends State<UserList> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.people),
+              leading: const Icon(Icons.folder),
               title: const Text('Firebase'),
               onTap: () {
                 Navigator.of(context).pushNamed(AppRoutes.testeList);
@@ -61,9 +61,8 @@ class _UserListState extends State<UserList> {
         ),
       ),
       body: ListView.builder(
-        itemCount: users.count,
-        itemBuilder: (ctx, i) => UserTile(users.byIndex(i)),
-      ),
+          itemCount: users.count,
+          itemBuilder: (ctx, i) => UserTile(users.byIndex(i))),
     );
   }
 }

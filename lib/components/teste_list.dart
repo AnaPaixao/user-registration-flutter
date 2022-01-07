@@ -9,7 +9,7 @@ class TesteList extends StatefulWidget {
 }
 
 class _TesteListState extends State<TesteList> {
-  List<String> userList = <String>["Nenhum registro carregado"];
+  List<String> userList = ["Nenhum registro carregado"];
 
   static const _baseUrl =
       "https://user-registration-a12e0-default-rtdb.firebaseio.com/";
