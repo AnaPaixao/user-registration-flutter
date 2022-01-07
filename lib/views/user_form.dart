@@ -1,15 +1,18 @@
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:user_registration/models/user.dart';
 import 'package:user_registration/provider/users.dart';
 
 class UserForm extends StatefulWidget {
+  const UserForm({Key? key}) : super(key: key);
+
   @override
   State<UserForm> createState() => _UserFormState();
 }
 
 class _UserFormState extends State<UserForm> {
-  // const UserForm({Key? key}) : super(key: key);
   final _form = GlobalKey<FormState>();
   bool _isLoading = false;
 
@@ -92,16 +95,15 @@ class _UserFormState extends State<UserForm> {
                 child: Column(
                   children: <Widget>[
                     TextFormField(
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        CpfInputFormatter(),
+                      ],
                       initialValue: _formData['cpf'],
                       decoration: const InputDecoration(labelText: 'CPF'),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
                           return 'Campo Obrigatório';
-                        }
-
-                        if (value.trim().length < 11 ||
-                            value.trim().length > 11) {
-                          return 'CPF Inválido';
                         }
 
                         return null;
@@ -111,36 +113,70 @@ class _UserFormState extends State<UserForm> {
                     TextFormField(
                       initialValue: _formData['userName'],
                       decoration: const InputDecoration(labelText: 'Nome'),
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return 'Campo Obrigatório';
+                        }
+
+                        if (value.length < 3) {
+                          return 'Mínino 3 letras';
+                        }
+
+                        return null;
+                      },
                       onSaved: (value) => _formData['userName'] = value!,
                     ),
                     TextFormField(
                       initialValue: _formData['mothersName'],
                       decoration:
                           const InputDecoration(labelText: 'Nome da Mãe'),
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return 'Campo Obrigatório';
+                        }
+
+                        if (value.length < 3) {
+                          return 'Mínino 3 letras';
+                        }
+
+                        return null;
+                      },
                       onSaved: (value) => _formData['mothersName'] = value!,
                     ),
                     TextFormField(
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        DataInputFormatter(),
+                      ],
                       initialValue: _formData['birth'],
                       decoration: const InputDecoration(
                           labelText: 'Data de Nascimento'),
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return 'Campo Obrigatório';
+                        }
+
+                        return null;
+                      },
                       onSaved: (value) => _formData['birth'] = value!,
                     ),
                     TextFormField(
                       initialValue: _formData['gender'],
-                      // decoration: const InputDecoration(labelText: 'Gênero'),
+                      decoration: const InputDecoration(labelText: 'Gênero'),
                       onSaved: (value) => _formData['gender'] = radioBtnValue,
                     ),
                     RadioListTile(
-                        title: Text("Feminino"),
-                        value: "feminino",
-                        groupValue: radioBtnValue,
-                        onChanged: (_) {
-                          setState(() {
-                            radioBtnValue = "feminino";
-                          });
-                        }),
+                      title: const Text("Feminino"),
+                      value: "feminino",
+                      groupValue: radioBtnValue,
+                      onChanged: (_) {
+                        setState(() {
+                          radioBtnValue = "feminino";
+                        });
+                      },
+                    ),
                     RadioListTile(
-                        title: Text("Masculino"),
+                        title: const Text("Masculino"),
                         value: "masculino",
                         groupValue: radioBtnValue,
                         onChanged: (_) {
@@ -149,7 +185,7 @@ class _UserFormState extends State<UserForm> {
                           });
                         }),
                     RadioListTile(
-                        title: Text("Outros"),
+                        title: const Text("Outros"),
                         value: "outros",
                         groupValue: radioBtnValue,
                         onChanged: (_) {
@@ -164,3 +200,5 @@ class _UserFormState extends State<UserForm> {
     );
   }
 }
+
+class MaskTextInputFormatter {}

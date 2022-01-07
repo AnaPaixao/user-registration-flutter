@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:user_registration/components/teste_list.dart';
 import 'package:user_registration/provider/users.dart';
 import 'package:user_registration/routes/app_routes.dart';
 import 'package:user_registration/views/user_form.dart';
@@ -33,7 +34,8 @@ class MyApp extends StatelessWidget {
         ),
         routes: {
           AppRoutes.home: (_) => const UserList(),
-          AppRoutes.userForm: (_) => UserForm()
+          AppRoutes.userForm: (_) => const UserForm(),
+          AppRoutes.testeList: (_) => TesteList()
         },
       ),
     );

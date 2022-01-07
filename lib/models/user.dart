@@ -1,4 +1,5 @@
 class User {
+  // ignore: prefer_typing_uninitialized_variables
   final id;
   final String cpf;
   final String userName;

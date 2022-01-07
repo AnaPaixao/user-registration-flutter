@@ -9,7 +9,23 @@ class Users with ChangeNotifier {
   static const _baseUrl =
       "https://user-registration-a12e0-default-rtdb.firebaseio.com/";
 
-  List<String> listStrings = <String>["Nenhum registro carregado."];
+  List<User> userList = [];
+
+  Future<void> getAll() {
+    return http.get(Uri.parse("$_baseUrl/users.json")).then((response) {
+      Map<String, dynamic> map = json.decode(response.body);
+      userList = [];
+      map.forEach((key, value) {
+        setState(() {
+          userList.add(map[key]["cpf"]);
+          userList.add(map[key]["userName"]);
+          userList.add(map[key]["mothersName"]);
+          userList.add(map[key]["birth"]);
+          userList.add(map[key]["gender"]);
+        });
+      });
+    });
+  }
 
   final Map<String, User> _items = {...dummyUsers};
 
@@ -22,7 +38,6 @@ class Users with ChangeNotifier {
   }
 
   User byIndex(int i) {
-    http.get((Uri.parse("$_baseUrl/users.json")));
     return _items.values.elementAt(i);
   }
 
@@ -95,16 +110,5 @@ class Users with ChangeNotifier {
     }
   }
 
-  Future<void> getAll() {
-    return http.get((Uri.parse("$_baseUrl/users.json"))).then((response) {
-      // Map<String, dynamic> map = json.decode(response.body);
-      // listStrings = [];
-      // map.forEach((key, value) {
-      //   setState(() {
-      //     listStrings.add(map[key]["user"]);
-      //     print(listStrings);
-      //   });
-      // });
-    });
-  }
+  void setState(Null Function() param0) {}
 }

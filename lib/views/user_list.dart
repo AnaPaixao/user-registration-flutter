@@ -12,6 +12,7 @@ class UserList extends StatefulWidget {
 }
 
 class _UserListState extends State<UserList> {
+  @override
   Widget build(BuildContext context) {
     final Users users = Provider.of(context);
 
@@ -45,6 +46,14 @@ class _UserListState extends State<UserList> {
               title: const Text('Lista de Cadastros'),
               onTap: () {
                 Navigator.of(context).pushNamed(AppRoutes.home);
+                // Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.people),
+              title: const Text('Firebase'),
+              onTap: () {
+                Navigator.of(context).pushNamed(AppRoutes.testeList);
                 // Navigator.pop(context);
               },
             ),
